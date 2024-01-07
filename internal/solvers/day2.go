@@ -1,45 +1,33 @@
-package main
+package solvers
 
 import (
-	"log/slog"
 	"strconv"
 	"strings"
-
-	"github.com/gca3020/AdventOfCode2023/internal/parse"
 )
 
-func main() {
-	slog.Info("Running day2")
-	inputs, err := parse.ReadInputs()
-	if err != nil {
-		slog.Error("could not read inputs", "err", err)
-	}
-	for _, input := range inputs {
-		part1(input)
-		part2(input)
-	}
+type Day2 struct {
 }
 
-func part1(input *parse.Input) {
+func (d *Day2) Part1(in []byte) int {
 	sum := 0
-	for _, line := range input.Lines() {
+	for _, line := range toLines(in) {
 		game := newGame(line)
 		if game.isPossible(12, 13, 14) {
 			sum += game.id
 		}
 	}
-	slog.Info("Sum of possible game IDs", "input", input.Name, "value", sum)
+	return sum
 }
 
-func part2(input *parse.Input) {
+func (d *Day2) Part2(in []byte) int {
 	sum := 0
-	for _, line := range input.Lines() {
+	for _, line := range toLines(in) {
 		game := newGame(line)
 		r, g, b := game.fewestPossible()
 		power := r * g * b
 		sum += power
 	}
-	slog.Info("Game Powers", "input", input.Name, "value", sum)
+	return sum
 }
 
 type draw struct {
@@ -72,8 +60,6 @@ func newGame(line string) game {
 				draw.green = count
 			case "blue":
 				draw.blue = count
-			default:
-				slog.Warn("Invalid color", "line", line)
 			}
 		}
 		draws = append(draws, draw)
@@ -98,4 +84,8 @@ func (g *game) fewestPossible() (red, green, blue int) {
 		green = max(draw.green, green)
 	}
 	return
+}
+
+func init() {
+	solvers[2] = &Day2{}
 }

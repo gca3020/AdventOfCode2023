@@ -21,4 +21,4 @@
 go.work
 
 # AoC Input Files
-day*/input.txt
+input/*
