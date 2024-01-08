@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/gca3020/AdventOfCode2023/internal/solvers"
 )
@@ -27,6 +28,7 @@ func main() {
 	}
 
 	solution := 0
+	startTime := time.Now()
 	if part == 1 {
 		solution = solver.Part1(input)
 	} else if part == 2 {
@@ -34,5 +36,5 @@ func main() {
 	} else {
 		panic("Puzzles only have parts 1 and 2")
 	}
-	fmt.Printf("Day %d Part %d: %d\n", day, part, solution)
+	fmt.Printf("Day %d Part %d: %d (%v)\n", day, part, solution, time.Since(startTime))
 }
