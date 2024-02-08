@@ -55,13 +55,21 @@ func (d *Day6) Part2(in []byte) int {
 }
 
 func (r race) waysToWin() int {
-	ways := 0
+	startWay, stopWay := 0, 0
 	for i := 0; i < r.time; i++ {
 		if r.isWinning(i) {
-			ways++
+			startWay = i
+			break
 		}
 	}
-	return ways
+
+	for i := r.time; i >= 0; i-- {
+		if r.isWinning(i) {
+			stopWay = i
+			break
+		}
+	}
+	return stopWay - startWay + 1
 }
 
 func (r race) isWinning(holdTime int) bool {
